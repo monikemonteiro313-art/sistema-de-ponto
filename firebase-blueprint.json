@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Enterprise employee user profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "matricula": { "type": "string" },
+        "nome": { "type": "string" },
+        "tipo": { "type": "string", "enum": ["colaborador", "adm-dev"] },
+        "senha": { "type": "string" },
+        "primeiroAcesso": { "type": "boolean" },
+        "bloqueado": { "type": "boolean" },
+        "desativado": { "type": "boolean" },
+        "perm_trocar_senha_adm": { "type": "boolean" },
+        "termoAceito": { "type": "boolean" },
+        "termoAceitoEm": { "type": "string" },
+        "jornadaId": { "type": "string" },
+        "jornadaCustom": { "type": "object" },
+        "insalubridade": { "type": "number" },
+        "criadoEm": { "type": "string" },
+        "desativadoEm": { "type": "string" },
+        "desativadoPor": { "type": "string" },
+        "ferias": { "type": "array" },
+        "forcarVolus": { "type": "boolean" },
+        "lider": { "type": "boolean" },
+        "trocaJornadaDia": { "type": "number" },
+        "trocaJornadaIdAnterior": { "type": "string" },
+        "trocaInsalubridadeDia": { "type": "number" },
+        "trocaInsalubridadeAnterior": { "type": "number" },
+        "autorizarHoraExtra": { "type": "boolean" },
+        "apenasSomarHoras": { "type": "boolean" }
+      },
+      "required": ["id", "matricula", "nome", "tipo", "bloqueado", "desativado", "termoAceito", "criadoEm"]
+    },
+    "Pontos": {
+      "title": "Pontos",
+      "description": "Clock-in days batidas mapping for a specific user",
+      "type": "object",
+      "properties": {
+        "days": { "type": "object" }
+      },
+      "required": ["days"]
+    },
+    "ConfigEmpresa": {
+      "title": "ConfigEmpresa",
+      "description": "Enterprise configurations",
+      "type": "object",
+      "properties": {
+        "nome": { "type": "string" },
+        "cnpj": { "type": "string" }
+      },
+      "required": ["nome", "cnpj"]
+    },
+    "ConfigMinimoHoras": {
+      "title": "ConfigMinimoHoras",
+      "description": "Minimum active work hours setup",
+      "type": "object",
+      "properties": {
+        "value": { "type": "number" }
+      },
+      "required": ["value"]
+    },
+    "ConfigFeriados": {
+      "title": "ConfigFeriados",
+      "description": "List of holiday dates",
+      "type": "object",
+      "properties": {
+        "list": { "type": "array" }
+      },
+      "required": ["list"]
+    },
+    "ConfigWizard": {
+      "title": "ConfigWizard",
+      "description": "Superadmin wizard completion status",
+      "type": "object",
+      "properties": {
+        "done": { "type": "boolean" }
+      },
+      "required": ["done"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Clock-in system auditing trails",
+      "type": "object",
+      "properties": {
+        "id": { "type": "number" },
+        "quando": { "type": "string" },
+        "quem": { "type": "string" },
+        "quemMat": { "type": "string" },
+        "acao": { "type": "string" },
+        "alvo": { "type": "string" },
+        "detalhe": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "accuracy": { "type": "number" }
+      },
+      "required": ["id", "quando", "quem", "quemMat", "acao", "alvo"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Employee user profiles"
+    },
+    "/pontos/{userId}": {
+      "schema": "Pontos",
+      "description": "Employees clock-in events registered under dates"
+    },
+    "/config/empresa": {
+      "schema": "ConfigEmpresa",
+      "description": "Organization company metadata settings"
+    },
+    "/config/minimoHoras": {
+      "schema": "ConfigMinimoHoras",
+      "description": "Minimum work day length constraint"
+    },
+    "/config/feriados": {
+      "schema": "ConfigFeriados",
+      "description": "Organization local/regional holiday dates list"
+    },
+    "/config/wizard": {
+      "schema": "ConfigWizard",
+      "description": "Initial system initialization status indicator flag"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Actions logging log trace data records"
+    }
+  }
+}
