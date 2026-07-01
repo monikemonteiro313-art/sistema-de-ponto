@@ -850,9 +850,9 @@ export function AdmOperadorPanel({
         }
       }
 
-      // 7. Horas Extras (if authorized)
+      // 7. Horas Extras
       let horasExtrasObs = "";
-      if (u.autorizarHoraExtra && r.horasExtra > 0) {
+      if (r.horasExtra > 0) {
         const hrExtraFmt = String(Math.round(r.horasExtra * 10) / 10).replace(".", ",");
         horasExtrasObs = `${hrExtraFmt} horas extras 50%`;
       }
@@ -1065,9 +1065,9 @@ export function AdmOperadorPanel({
         }
       }
 
-      // 7. Horas Extras (if authorized)
+      // 7. Horas Extras
       let horasExtrasObs = "";
-      if (u.autorizarHoraExtra && r.horasExtra > 0) {
+      if (r.horasExtra > 0) {
         const hrExtraFmt = String(Math.round(r.horasExtra * 10) / 10).replace(".", ",");
         horasExtrasObs = `${hrExtraFmt} horas extras 50%`;
       }
@@ -1242,7 +1242,7 @@ export function AdmOperadorPanel({
       }
 
       let horasExtrasObs = "";
-      if (u.autorizarHoraExtra && r.horasExtra > 0) {
+      if (r.horasExtra > 0) {
         const hrExtraFmt = String(Math.round(r.horasExtra * 10) / 10).replace(".", ",");
         horasExtrasObs = `${hrExtraFmt} horas extras 50%`;
       }
@@ -1411,7 +1411,7 @@ export function AdmOperadorPanel({
       }
 
       let horasExtrasObs = "";
-      if (u.autorizarHoraExtra && r.horasExtra > 0) {
+      if (r.horasExtra > 0) {
         const hrExtraFmt = String(Math.round(r.horasExtra * 10) / 10).replace(".", ",");
         horasExtrasObs = `${hrExtraFmt} horas extras 50%`;
       }
@@ -1757,24 +1757,6 @@ export function AdmOperadorPanel({
     showToast(volusStatus ? "Solicitação de Cartão Volus forçada" : "Forçar Cartão Volus removido");
   }
 
-  function alternarAutorizarHoraExtra(userId: number, status: boolean) {
-    const u = users.find(x => x.id === userId);
-    setUsers(prev =>
-      prev.map(x =>
-        x.id === userId
-          ? { ...x, autorizarHoraExtra: status }
-          : x
-      )
-    );
-    if (u) {
-      onAddLog(
-        "Alterou Autorização de Hora Extra",
-        `${u.nome} (${u.matricula})`,
-        `Autorizar hora extra no relatório: ${status ? "Sim" : "Não"}. Responsável: ${currentUser.nome}`
-      );
-    }
-    showToast(status ? "Hora extra autorizada no relatório geral" : "Exibição de hora extra desativada");
-  }
 
   function alternarApenasSomarHoras(userId: number, status: boolean) {
     const u = users.find(x => x.id === userId);
@@ -2110,19 +2092,6 @@ export function AdmOperadorPanel({
                 </div>
               </label>
 
-              {/* Horas extras toggle */}
-              <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: t.surfaceAlt, border: `1.5px solid ${activeUser.autorizarHoraExtra ? t.accent : t.border}`, borderRadius: 10, cursor: "pointer", userSelect: "none" }}>
-                <input
-                  type="checkbox"
-                  checked={!!activeUser.autorizarHoraExtra}
-                  onChange={e => alternarAutorizarHoraExtra(activeUser.id, e.target.checked)}
-                  style={{ width: 17, height: 17, cursor: "pointer" }}
-                />
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: t.text }}>⏰ Autorizar Horas Extras</div>
-                  <div style={{ fontSize: 11, color: t.textSub }}>Exibe horas extras calculadas no Relatório Geral</div>
-                </div>
-              </label>
 
               {/* Apenas somar horas toggle */}
               <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: t.surfaceAlt, border: `1.5px solid ${activeUser.apenasSomarHoras ? t.accent : t.border}`, borderRadius: 10, cursor: "pointer", userSelect: "none" }}>
@@ -2857,9 +2826,9 @@ export function AdmOperadorPanel({
                         }
                       }
 
-                      // 7. Horas Extras (if authorized)
+                      // 7. Horas Extras
                       let horasExtrasObs = "";
-                      if (u.autorizarHoraExtra && r.horasExtra > 0) {
+                      if (r.horasExtra > 0) {
                         const hrExtraFmt = String(Math.round(r.horasExtra * 10) / 10).replace(".", ",");
                         horasExtrasObs = `${hrExtraFmt} horas extras 50%`;
                       }

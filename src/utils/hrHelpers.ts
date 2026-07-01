@@ -212,7 +212,10 @@ export function calcularDia(
   if (jornada?.entrada && bEntrada && !u.apenasSomarHoras) {
     const prevEntrada = toMin(jornada.entrada) || 0;
     const realEntrada = entradaReal.getHours() * 60 + entradaReal.getMinutes();
-    atrasoMin = Math.max(0, realEntrada - prevEntrada);
+    const diff = realEntrada - prevEntrada;
+    if (diff > 10) {
+      atrasoMin = diff;
+    }
   }
 
   // Saída antecipada
@@ -220,7 +223,10 @@ export function calcularDia(
   if (jornada?.saida && saidaReal && !bSaida?.cobertoPorAtestado && !u.apenasSomarHoras) {
     const prevSaida  = toMin(jornada.saida) || 0;
     const realSaida  = saidaReal.getHours() * 60 + saidaReal.getMinutes();
-    saidaAntMin = Math.max(0, prevSaida - realSaida);
+    const diff = prevSaida - realSaida;
+    if (diff > 10) {
+      saidaAntMin = diff;
+    }
   }
 
   // Hora extra
@@ -228,7 +234,10 @@ export function calcularDia(
   if (jornada?.saida && saidaReal && !bSaida?.cobertoPorAtestado) {
     const prevSaida = toMin(jornada.saida) || 0;
     const realSaida = saidaReal.getHours() * 60 + saidaReal.getMinutes();
-    horasExtra = Math.max(0, (realSaida - prevSaida) / 60);
+    const diff = realSaida - prevSaida;
+    if (diff > 10) {
+      horasExtra = diff / 60;
+    }
   }
 
   // Calcular Adicional Noturno
